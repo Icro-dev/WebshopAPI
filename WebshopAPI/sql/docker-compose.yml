@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+    mssql:
+        container_name: webshopAPIDB
+        hostname: webshopAPIDB
+        environment:
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD=Wachtwoord1!
+            - MSSQL_PID=Express
+        ports:
+            - '1433:1433'
+        image: 'mcr.microsoft.com/mssql/server:latest'
+        volumes:
+            - sql_data:/var/opt/mssql
+volumes:
+  sql_data:
