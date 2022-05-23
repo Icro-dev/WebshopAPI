@@ -1,8 +1,8 @@
 version: '3.3'
 services:
     mssql:
-        container_name: webshopAPIDB
-        hostname: webshopAPIDB
+        container_name: webshopDB
+        hostname: webshopDB
         environment:
             - ACCEPT_EULA=Y
             - SA_PASSWORD=Wachtwoord1!

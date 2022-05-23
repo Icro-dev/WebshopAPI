@@ -11,19 +11,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var connectionString = "Data Source=localhost,1433;User ID=sa;Password=Wachtwoord1!;Database=webshop_db";
+var connectionString = "Data Source=mssql;User ID=sa;Password=Wachtwoord1!;Database=webshopDB";
+/*var connectionString = "Data Source=localhost;User ID=sa;Password=Wachtwoord1!;Database=webshopDB";*/
 
 builder.Services
     .AddDbContext<WebshopContext>(options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-/*if (app.Environment.IsDevelopment())
+ //Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}*/
+}
 
 using (var scope = app.Services.CreateScope())
 {
