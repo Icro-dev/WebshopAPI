@@ -1,9 +1,9 @@
-version: '3.3'
+version: '3.4'
 
 services:
   webshopapi:
-    image: webshopapi:dev
-    container_name: WebshopAPI_1
+    image: seethe91/webshopapi:dev
+    container_name: WebshopAPI
     build:
       target: base
       labels:

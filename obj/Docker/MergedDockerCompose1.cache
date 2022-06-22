@@ -1,5 +1,25 @@
 name: dockercompose15530145741517834760
 services:
+  mssql:
+    container_name: webshopDB
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Express
+      SA_PASSWORD: Wachtwoord1!
+    hostname: sql-webshopDB
+    image: mcr.microsoft.com/mssql/server:latest
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 1433
+      published: "1433"
+      protocol: tcp
+    volumes:
+    - type: volume
+      source: sql_data
+      target: /var/opt/mssql
+      volume: {}
   webshopapi:
     build:
       context: H:\xamarin_apps\WebshopAPI
@@ -9,17 +29,23 @@ services:
         com.microsoft.visual-studio.project-name: WebshopAPI
       target: base
     container_name: WebshopAPI
+    depends_on:
+      mssql:
+        condition: service_started
     entrypoint:
     - tail
     - -f
     - /dev/null
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTPS_PORT:"8081": null
+      ASPNETCORE_Kestrel__Certificates__Default__Password: Wachtwoord1!
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/WebshopAPI.pfx
       ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
       ASPNETCORE_URLS: https://+:443;http://+:80
       DOTNET_USE_POLLING_FILE_WATCHER: "1"
       NUGET_FALLBACK_PACKAGES: /root/.nuget/fallbackpackages
-    image: webshopapi:dev
+    image: seethe91/webshopapi:dev
     labels:
       com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
         --additionalProbingPath /root/.nuget/fallbackpackages  "/app/bin/Debug/net6.0/WebshopAPI.dll"'
@@ -34,13 +60,27 @@ services:
       target: 80
       protocol: tcp
     - mode: ingress
+      target: 80
+      published: "8080"
+      protocol: tcp
+    - mode: ingress
       target: 443
+      protocol: tcp
+    - mode: ingress
+      target: 443
+      published: "8081"
       protocol: tcp
     tty: true
     volumes:
     - type: bind
       source: H:\xamarin_apps\WebshopAPI\WebshopAPI
       target: /app
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Icrolux\.aspnet\https
+      target: /https
+      read_only: true
       bind:
         create_host_path: true
     - type: bind
@@ -80,3 +120,6 @@ services:
 networks:
   default:
     name: dockercompose15530145741517834760_default
+volumes:
+  sql_data:
+    name: dockercompose15530145741517834760_sql_data

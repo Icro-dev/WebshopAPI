@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+    webshopapi:
+      image: seethe91/webshopapi
+      environment:
+        SQL: mssql
+      ports:
+        -"80:80"  
+      build:
+        context: .
+        dockerfile: WebshopAPI/Dockerfile
+      depends_on:
+        - mssql
+
+    mssql:
+      container_name: webshopDB
+      hostname: sql-webshopDB
+      network_mode: proxy
+      environment:
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=Wachtwoord1!
+        - MSSQL_PID=Express
+      ports:
+        - '1433:1433'
+      image: 'mcr.microsoft.com/mssql/server:latest'
+      volumes:
+        - sql_data:/var/opt/mssql 
+
+volumes:
+  sql_data:

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using WebshopAPI.Context;
@@ -11,9 +12,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var connectionString = "Data Source=mssql;User ID=sa;Password=Wachtwoord1!;Database=webshopDB";
-/*var connectionString = "Data Source=localhost;User ID=sa;Password=Wachtwoord1!;Database=webshopDB";*/
 
+//Local Connection string:
+var connectionString = "Data Source=mssql;User ID=sa;Password=Wachtwoord1!;Database=webshopDB;TrustServerCertificate=True;MultiSubnetFailover=True;";
+/*var connectionString = "Data Source=sql-webshopDB;User ID=sa;Password=Wachtwoord1!;Database=LocalwebshopDB";*/
+
+//Remote connection string:
+/*var connectionString = "Data Source=192.168.2.23,1433;User ID=sa;Password=Wachtwoord1!;Database=webshopDB;TrustServerCertificate=True;MultiSubnetFailover=True;";*/
+
+/*var connectionString = "Data Source=host.docker.internal,1433;User ID=sa;Password=Wachtwoord1!;Database=webshopDB;TrustServerCertificate=True;MultiSubnetFailover=True;";*/
+/*var connectionString = "Data Source=86.87.181.16,1433;User ID=sa;Password=Wachtwoord1!;Database=webshopDB;TrustServerCertificate=True;MultiSubnetFailover=True;";*/
 builder.Services
     .AddDbContext<WebshopContext>(options => options.UseSqlServer(connectionString));
 
@@ -48,7 +56,11 @@ if (!app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 
-app.UseHttpsRedirection();
+/*app.UseHttpsRedirection();*/
+/*app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});*/
 
 app.UseAuthorization();
 

@@ -55,7 +55,7 @@ namespace WebshopAPI
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProducts(long id, Products products)
         {
-            if (id != products.Id)
+            if (id != products.ProductsId)
             {
                 return BadRequest();
             }
@@ -90,10 +90,11 @@ namespace WebshopAPI
           {
               return Problem("Entity set 'WebshopContext.Products'  is null.");
           }
+         
             _context.Products.Add(products);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProducts", new { id = products.Id }, products);
+            return CreatedAtAction("GetProducts", new { id = products.ProductsId }, products);
         }
 
         // DELETE: api/Products/5
@@ -118,7 +119,7 @@ namespace WebshopAPI
 
         private bool ProductsExists(long id)
         {
-            return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Products?.Any(e => e.ProductsId == id)).GetValueOrDefault();
         }
     }
 }

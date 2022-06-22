@@ -7,7 +7,7 @@ namespace WebshopAPI.Models
     public class Products
     {
         [Key]
-        public long Id { get; set; }
+        public long ProductsId { get; set; }
         public string? Name { get; set; }
         public DateTime? AvailableSince { get; set; }
         public string? Property1 { get; set; }
@@ -37,5 +37,6 @@ namespace WebshopAPI.Models
         public string? Property25 { get; set; }
         public double? Price { get; set; }
         public bool? IsAvailable { get; set; }
+
     }
 }

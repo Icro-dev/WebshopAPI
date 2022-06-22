@@ -1,8 +1,8 @@
-version: '3.3'
+version: '3.4'
 
 services:
   webshopapi:
-    container_name: WebshopAPI_1
+    container_name: WebshopAPI
     build:
       labels:
         com.microsoft.created-by: "visual-studio"

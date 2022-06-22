@@ -1,0 +1,23 @@
+docker-compose -f "docker-compose.yml" up --build
+
+docker login -u "seethe91" -p "Pincode9588!" docker.io
+
+docker-compose push
+
+docker ps
+
+docker commit image name
+
+docker save name > name.tar
+
+docker desktop stuck starting
+
+docker-compose up -d
+
+docker-compose --context remote -f "docker-compose-remote.yml" up --build
+
+docker context use remote
+
+docker context use default
+
+docker context create remote --docker "host=ssh://user@192.168.2.23"

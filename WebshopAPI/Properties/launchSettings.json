@@ -12,7 +12,7 @@
     "WebshopAPI": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/webshop/Products",
+      "launchUrl": "api/Products",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

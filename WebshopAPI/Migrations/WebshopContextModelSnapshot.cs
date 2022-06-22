@@ -17,18 +17,69 @@ namespace WebshopAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.5")
+                .HasAnnotation("ProductVersion", "6.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("WebshopAPI.Models.Products", b =>
+            modelBuilder.Entity("WebshopAPI.Models.News", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("ArticleText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Author")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("News");
+                });
+
+            modelBuilder.Entity("WebshopAPI.Models.Order", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long?>("ProductsId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double?>("TotalPrice")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductsId");
+
+                    b.HasIndex("Username");
+
+                    b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("WebshopAPI.Models.Products", b =>
+                {
+                    b.Property<long>("ProductsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ProductsId"), 1L, 1);
 
                     b.Property<DateTime?>("AvailableSince")
                         .HasColumnType("datetime2");
@@ -117,9 +168,59 @@ namespace WebshopAPI.Migrations
                     b.Property<string>("Property9")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductsId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("WebshopAPI.Models.Users", b =>
+                {
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HouseNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Longitude")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Zipcode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Username");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("WebshopAPI.Models.Order", b =>
+                {
+                    b.HasOne("WebshopAPI.Models.Products", "Products")
+                        .WithMany()
+                        .HasForeignKey("ProductsId");
+
+                    b.HasOne("WebshopAPI.Models.Users", "User")
+                        .WithMany()
+                        .HasForeignKey("Username");
+
+                    b.Navigation("Products");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

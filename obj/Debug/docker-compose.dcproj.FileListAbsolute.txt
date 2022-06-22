@@ -7,11 +7,12 @@ H:\xamarin_apps\WebshopAPI\bin\Debug\WebshopAPI.dll
 H:\xamarin_apps\WebshopAPI\bin\Debug\Microsoft.EntityFrameworkCore.dll
 H:\xamarin_apps\WebshopAPI\bin\Debug\Microsoft.EntityFrameworkCore.Relational.dll
 H:\xamarin_apps\WebshopAPI\bin\Debug\Swashbuckle.AspNetCore.SwaggerGen.dll
+H:\xamarin_apps\WebshopAPI\bin\Debug\Swashbuckle.AspNetCore.Swagger.dll
+H:\xamarin_apps\WebshopAPI\bin\Debug\Swashbuckle.AspNetCore.SwaggerUI.dll
 H:\xamarin_apps\WebshopAPI\bin\Debug\Microsoft.EntityFrameworkCore.SqlServer.dll
 H:\xamarin_apps\WebshopAPI\bin\Debug\Microsoft.EntityFrameworkCore.Abstractions.dll
 H:\xamarin_apps\WebshopAPI\bin\Debug\Microsoft.Extensions.Caching.Memory.dll
 H:\xamarin_apps\WebshopAPI\bin\Debug\Microsoft.OpenApi.dll
-H:\xamarin_apps\WebshopAPI\bin\Debug\Swashbuckle.AspNetCore.Swagger.dll
 H:\xamarin_apps\WebshopAPI\bin\Debug\Microsoft.Data.SqlClient.dll
 H:\xamarin_apps\WebshopAPI\bin\Debug\Microsoft.Identity.Client.dll
 H:\xamarin_apps\WebshopAPI\bin\Debug\WebshopAPI.pdb

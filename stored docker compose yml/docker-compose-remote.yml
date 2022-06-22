@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+    webshopapi:
+      image: seethe91/webshopapi
+      environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_URLS=https://+8081;http://+8080
+        - ASPNETCORE_HTTPS_PORT:"8081"
+        - VIRTUAL_HOST=liquidizerapi.tk
+        - VIRTUAL_PORT=8001
+        - LETSENCRYPT_HOST=liquidizerapi.tk
+        - LETSENCRYPT_EMAIL=seethe91@gmail.com
+      network_mode: proxy  
+      build:
+        context: .
+        dockerfile: WebshopAPI/Dockerfile
+      depends_on:
+        - mssql
+
+    mssql:
+      container_name: webshopDB
+      hostname: sql-webshopDB
+      network_mode: proxy
+      environment:
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=Wachtwoord1!
+        - MSSQL_PID=Express
+      ports:
+        - '1433:1433'
+      image: 'mcr.microsoft.com/mssql/server:latest'
+      volumes:
+        - sql_data:/var/opt/mssql 
+
+volumes:
+  sql_data:

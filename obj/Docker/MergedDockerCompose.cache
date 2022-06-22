@@ -1,13 +1,39 @@
 name: dockercompose15530145741517834760
 services:
+  mssql:
+    container_name: webshopDB
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Express
+      SA_PASSWORD: Wachtwoord1!
+    hostname: sql-webshopDB
+    image: mcr.microsoft.com/mssql/server:latest
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 1433
+      published: "1433"
+      protocol: tcp
+    volumes:
+    - type: volume
+      source: sql_data
+      target: /var/opt/mssql
+      volume: {}
   webshopapi:
     build:
       context: H:\xamarin_apps\WebshopAPI
       dockerfile: WebshopAPI/Dockerfile
+    depends_on:
+      mssql:
+        condition: service_started
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTPS_PORT:"8081": null
+      ASPNETCORE_Kestrel__Certificates__Default__Password: Wachtwoord1!
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/WebshopAPI.pfx
       ASPNETCORE_URLS: https://+:443;http://+:80
-    image: webshopapi
+    image: seethe91/webshopapi
     networks:
       default: null
     ports:
@@ -15,12 +41,20 @@ services:
       target: 80
       protocol: tcp
     - mode: ingress
+      target: 80
+      published: "8080"
+      protocol: tcp
+    - mode: ingress
       target: 443
+      protocol: tcp
+    - mode: ingress
+      target: 443
+      published: "8081"
       protocol: tcp
     volumes:
     - type: bind
-      source: C:\Users\Icrolux\AppData\Roaming/Microsoft/UserSecrets
-      target: /root/.microsoft/usersecrets
+      source: C:\Users\Icrolux\.aspnet\https
+      target: /https
       read_only: true
       bind:
         create_host_path: true
@@ -30,6 +64,15 @@ services:
       read_only: true
       bind:
         create_host_path: true
+    - type: bind
+      source: C:\Users\Icrolux\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
 networks:
   default:
     name: dockercompose15530145741517834760_default
+volumes:
+  sql_data:
+    name: dockercompose15530145741517834760_sql_data
